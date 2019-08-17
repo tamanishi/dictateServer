@@ -22,12 +22,16 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 app.post('/', (req, res) => {
   try {
-    let text = (req.body.text === undefined ? 'ガハハハハハ' : req.body.text);
-    let speaker = (req.body.speaker === undefined ? voice.SPEAKER.HIKARI : req.body.speaker);
+    let text = (req.body.text === '' ? 'ガハハハハハ' : req.body.text);
+    let speaker = (req.body.speaker === '' ? voice.SPEAKER.HIKARI : req.body.speaker);
+    let speed = (req.body.speed === '' ? 100 : req.body.speed);
+    let pitch = (req.body.pitch ==='' ? 100 : req.body.pitch);
     voice
     .speaker(speaker)
     .format(voice.FORMAT.MP3)
     .emotion(voice.EMOTION.HAPINESS)
+    .speed(speed)
+    .pitch(pitch)
     .speak(text, (err, buf) => {
       if(err)console.error(err);
       fs.writeFile(__dirname + '/public/text.mp3', buf, 'binary', (err) => {

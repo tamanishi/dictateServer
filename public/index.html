@@ -7,9 +7,13 @@
       function speak() {
         const text = document.getElementById('text').value;
         const speaker = document.getElementById('speaker').value;
+        const speed = document .getElementById('speed').value;
+        const pitch = document .getElementById('pitch').value;
         const obj = {
           text: text,
-          speaker: speaker
+          speaker: speaker,
+          speed: speed,
+          pitch: pitch
         };
         const method = "POST";
         const body = JSON.stringify(obj);
@@ -17,24 +21,80 @@
           'Content-Type': 'application/json'
         };
         fetch("./", {method, headers, body})
-        .then((res)=> res.json())
-        .then(console.log)
-        .catch(console.error);
+        .then((res) => {
+          // console.log(res);
+        })
+        .catch((err) => {
+          console.error(err)
+        });
+      }
+      function speedRange() {
+        const speed = document.getElementById('speed').value;
+        if (speed > 200) {
+          document.getElementById('speed').value = 200;
+        } else if (speed < 50) {
+          document.getElementById('speed').value = 50;
+        }
+      }
+      function pitchRange() {
+        const pitch = document.getElementById('pitch').value;
+        if (pitch > 200) {
+          document.getElementById('pitch').value = 200;
+        } else if (pitch < 50) {
+          document.getElementById('pitch').value = 50;
+        }
       }
     </script>
+    <style>
+      li {
+        list-style: none
+      }
+      span.title {
+        font-size: larger;
+      }
+      span.desc {
+        font-size: x-small;
+      }
+    </style>
   </head>
   <body>
-    <li style='list-style: none'>
-      <ul><textarea id='text' rows='10' cols='200'></textarea></ul>
-      <ul><select id='speaker'>
-        <option value='show'>show</option>
-        <option value='haruka'>haruka</option>
-        <option value='hikari'>hikari</option>
-        <option value='takeru'>takeru</option>
-        <option value='santa'>santa</option>
-        <option value='bear'>bear</option>
-      </select></ul>
-      <ul><button onclick="speak()">speak</button></ul>
+    <li>
+      <ul><span class='title'>text</span>
+        <li>
+          <ul>
+            <textarea id='text' rows='10' cols='100'></textarea>
+          </ul>
+        </li>
+      </ul>
+      <ul><span class='title'>speaker</span>
+        <li>
+          <ul>
+            <select id='speaker'>
+              <option value='show'>show</option>
+              <option value='haruka'>haruka</option>
+              <option value='hikari'>hikari</option>
+              <option value='takeru'>takeru</option>
+              <option value='santa'>santa</option>
+              <option value='bear'>bear</option>
+            </select>
+          </ul>
+        </li>
+      </ul>
+      <ul><span class='title'>speed</span>
+        <li>
+          <ul>
+            <input id='speed' onblur='speedRange()' type='number' value='100' min='50' max='200'> <span class='desc'>50 to 200</span>
+          </ul>
+        </li>
+      </ul>
+      <ul><span class='title'>pitch</span>
+        <li>
+          <ul>
+            <input id='pitch' onblur='pitchRange()' type='number' value='100' min='50' max='200'> <span class='desc'>50 to 200</span>
+          </ul>
+        </li>
+      </ul>
+      <ul><li><button onclick="speak()">speak</button></li></ul>
     </li>
   </body>
 </html>
