@@ -9,11 +9,15 @@
         const speaker = document.getElementById('speaker').value;
         const speed = document .getElementById('speed').value;
         const pitch = document .getElementById('pitch').value;
+        const emotion = document.getElementById('emotion').value;
+        const emotion_level = document.getElementById('emotion_level').value;
         const obj = {
           text: text,
           speaker: speaker,
           speed: speed,
-          pitch: pitch
+          pitch: pitch,
+          emotion: emotion,
+          emotion_level: emotion_level
         };
         const method = "POST";
         const body = JSON.stringify(obj);
@@ -91,6 +95,31 @@
         <li>
           <ul>
             <input id='pitch' onblur='pitchRange()' type='number' value='100' min='50' max='200'> <span class='desc'>50 to 200</span>
+          </ul>
+        </li>
+      </ul>
+      <ul><span class='title'>emotion</span>
+        <li>
+          <ul>
+            <select id='emotion'>
+              <option value='0'>none</option>
+              <option value='happiness'>happieness</option>
+              <option value='anger'>anger</option>
+              <option value='sadness'>sadness</option>
+            </select> <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
+          </ul>
+        </li>
+      </ul>
+      <ul><span class='title'>emotion level</span>
+        <li>
+          <ul>
+            <select id='emotion_level'>
+              <option value='0'>none</option>
+              <option value='1'>1</option>
+              <option value='2'>2</option>
+              <option value='3'>3</option>
+              <option value='4'>4</option>
+            </select> <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
           </ul>
         </li>
       </ul>

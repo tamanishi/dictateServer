@@ -26,10 +26,15 @@ app.post('/', (req, res) => {
     let speaker = (req.body.speaker === '' ? voice.SPEAKER.HIKARI : req.body.speaker);
     let speed = (req.body.speed === '' ? 100 : req.body.speed);
     let pitch = (req.body.pitch ==='' ? 100 : req.body.pitch);
+    let emotion = (req.body.emotion ==='' ? voice.EMOTION.NONE : req.body.emotion);
+    let emotion_level = (req.body.emotion_level ==='' ? voice.EMOTION_LEVEL.NONE : req.body.emotion_level);
+    if (speaker !== voice.SPEAKER.SHOW) {
+      voice.emotion(emotion)
+      .emotion_level(emotion_level);
+    }
     voice
-    .speaker(speaker)
     .format(voice.FORMAT.MP3)
-    .emotion(voice.EMOTION.HAPINESS)
+    .speaker(speaker)
     .speed(speed)
     .pitch(pitch)
     .speak(text, (err, buf) => {
