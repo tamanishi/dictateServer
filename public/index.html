@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <title>speak</title>
+    <script lang="javascript">
+      function speak() {
+        const text = document.getElementById('text').value;
+        const speaker = document.getElementById('speaker').value;
+        const obj = {
+          text: text,
+          speaker: speaker
+        };
+        const method = "POST";
+        const body = JSON.stringify(obj);
+        const headers = {
+          'Content-Type': 'application/json'
+        };
+        fetch("./", {method, headers, body})
+        .then((res)=> res.json())
+        .then(console.log)
+        .catch(console.error);
+      }
+    </script>
+  </head>
+  <body>
+    <li style='list-style: none'>
+      <ul><textarea id='text' rows='10' cols='200'></textarea></ul>
+      <ul><select id='speaker'>
+        <option value='show'>show</option>
+        <option value='haruka'>haruka</option>
+        <option value='hikari'>hikari</option>
+        <option value='takeru'>takeru</option>
+        <option value='santa'>santa</option>
+        <option value='bear'>bear</option>
+      </select></ul>
+      <ul><button onclick="speak()">speak</button></ul>
+    </li>
+  </body>
+</html>

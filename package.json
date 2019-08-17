@@ -1,0 +1,16 @@
+{
+  "name": "dictate",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Masayuki Sunahara <tamanishi@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "google-home-notifier": "^1.2.0",
+    "voicetext": "0.0.7"
+  }
+}
