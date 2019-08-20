@@ -3,14 +3,17 @@
   <head>
     <meta charset="UTF-8">
     <title>speak</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.js" integrity="sha256-BTlTdQO9/fascB1drekrDVkaKd9PkwBymMlHOiG+qLI=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script lang="javascript">
       function speak() {
         const text = document.getElementById('text').value;
-        const speaker = document.getElementById('speaker').value;
+        const speaker = $('#speaker input:radio:checked').val();
         const speed = document .getElementById('speed').value;
         const pitch = document .getElementById('pitch').value;
-        const emotion = document.getElementById('emotion').value;
-        const emotion_level = document.getElementById('emotion_level').value;
+        const emotion = $('#emotion input:radio:checked').val();
+        const emotion_level = $('#emotion_level input:radio:checked').val();
         const obj = {
           text: text,
           speaker: speaker,
@@ -32,22 +35,6 @@
           console.error(err)
         });
       }
-      function speedRange() {
-        const speed = document.getElementById('speed').value;
-        if (speed > 200) {
-          document.getElementById('speed').value = 200;
-        } else if (speed < 50) {
-          document.getElementById('speed').value = 50;
-        }
-      }
-      function pitchRange() {
-        const pitch = document.getElementById('pitch').value;
-        if (pitch > 200) {
-          document.getElementById('pitch').value = 200;
-        } else if (pitch < 50) {
-          document.getElementById('pitch').value = 50;
-        }
-      }
     </script>
     <style>
       li {
@@ -62,67 +49,103 @@
     </style>
   </head>
   <body>
-    <li>
-      <ul><span class='title'>text</span> <span class='button'><button onclick="speak()">speak</button></span>
-        <li>
-          <ul>
-            <textarea id='text' rows='10' cols='100'></textarea>
-          </ul>
-        </li>
-      </ul>
-      <ul><span class='title'>speaker</span>
-        <li>
-          <ul>
-            <select id='speaker'>
-              <option value='show'>show</option>
-              <option value='haruka'>haruka</option>
-              <option value='hikari'>hikari</option>
-              <option value='takeru'>takeru</option>
-              <option value='santa'>santa</option>
-              <option value='bear'>bear</option>
-            </select>
-          </ul>
-        </li>
-      </ul>
-      <ul><span class='title'>speed</span>
-        <li>
-          <ul>
-            <input id='speed' onblur='speedRange()' type='number' value='100' min='50' max='200'> <span class='desc'>50 to 200</span>
-          </ul>
-        </li>
-      </ul>
-      <ul><span class='title'>pitch</span>
-        <li>
-          <ul>
-            <input id='pitch' onblur='pitchRange()' type='number' value='100' min='50' max='200'> <span class='desc'>50 to 200</span>
-          </ul>
-        </li>
-      </ul>
-      <ul><span class='title'>emotion</span>
-        <li>
-          <ul>
-            <select id='emotion'>
-              <option value='0'>none</option>
-              <option value='happiness'>happieness</option>
-              <option value='anger'>anger</option>
-              <option value='sadness'>sadness</option>
-            </select> <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
-          </ul>
-        </li>
-      </ul>
-      <ul><span class='title'>emotion level</span>
-        <li>
-          <ul>
-            <select id='emotion_level'>
-              <option value='0'>none</option>
-              <option value='1'>1</option>
-              <option value='2'>2</option>
-              <option value='3'>3</option>
-              <option value='4'>4</option>
-            </select> <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
-          </ul>
-        </li>
-      </ul>
-    </li>
+    <div class='container'>
+      <table class='table table-borderless'>
+        <tbody>
+          <tr>
+            <th scope='row'><h5>text</h5></th>
+            <td>
+              <textarea id='text' rows='10' cols='100'></textarea>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'><h5>speaker</h5></th>
+            <td>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons" id="speaker">
+                <label class="btn btn-light active">
+                  <input type="radio" name="speakers" value="show" autocomplete="off" checked>show
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="speakers" value="haruka" autocomplete="off">haruka
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="speakers" value="hikari" autocomplete="off">hikari
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="speakers" value="takeru" autocomplete="off">takeru
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="speakers" value="santa" autocomplete="off">santa
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="speakers" value="bear" autocomplete="off">bear
+                </label>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'><h5>speed</h5></th>
+            <td>
+                <input type='range' class='custom-range' value='100' min='50' max='200' step='10' id='speed'>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'><h5>pitch</h5></th>
+            <td>
+              <input type='range' class='custom-range' value='100' min='50' max='200' step='10' id='pitch'>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'><h5>emotion</h5></th>
+            <td>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons" id="emotion">
+                <label class="btn btn-light active">
+                  <input type="radio" name="emotions" value="0" autocomplete="off" checked>none
+                </label>
+                <label class="btn btn-warning">
+                  <input type="radio" name="emotions" value="happiness" autocomplete="off">happiness
+                </label>
+                <label class="btn btn-danger">
+                  <input type="radio" name="emotions" value="anger" autocomplete="off">anger
+                </label>
+                <label class="btn btn-info">
+                  <input type="radio" name="emotions" value="sadness" autocomplete="off">sadness
+                </label>
+              </div>
+              <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'><h5>emotion level</h5></th>
+            <td>
+              <div class="btn-group btn-group-toggle" data-toggle="buttons" id="emotion_level">
+                <label class="btn btn-light active">
+                  <input type="radio" name="emtion_levels" value="0" autocomplete="off" checked>none
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="emtion_levels" value="1" autocomplete="off">1
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="emtion_levels" value="2" autocomplete="off">2
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="emtion_levels" value="3" autocomplete="off">3
+                </label>
+                <label class="btn btn-light">
+                  <input type="radio" name="emtion_levels" value="4" autocomplete="off">4
+                </label>
+              </div>
+              <span class='desc'>valid for the following speakers. haruka, hikari, takeru, santa and bear.</span>
+            </td>
+          </tr>
+          <tr>
+            <th scope='row'>
+              <button type='button' class='btn btn-primary' onclick="speak()">speak</button></h5>
+            </th>
+            <td></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>
