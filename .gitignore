@@ -49,4 +49,4 @@ jspm_packages
 
 .env
 public/*.mp3
-
+public/*.wav

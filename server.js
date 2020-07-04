@@ -9,9 +9,11 @@ var app = express();
 const serverPort = 1234;
 let Voicetext = require('voicetext');
 var voice = new Voicetext(process.env.VOICETEXT_APIKEY);
+const exec = require('child_process').exec;
 
-let deviceName = 'Google Home';
-googlehome.device(deviceName, 'ja');
+// let deviceName = 'Google Nest mini';
+// googlehome.device(deviceName, 'ja');
+googlehome.ip(process.env.GOOGLEHOME_IP, 'ja');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -33,15 +35,18 @@ app.post('/', (req, res) => {
       .emotion_level(emotion_level);
     }
     voice
-    .format(voice.FORMAT.MP3)
+//    .format(voice.FORMAT.MP3)
     .speaker(speaker)
     .speed(speed)
     .pitch(pitch)
     .speak(text, (err, buf) => {
       if(err)console.error(err);
-      fs.writeFile(__dirname + '/public/text.mp3', buf, 'binary', (err) => {
+      fs.writeFile(__dirname + '/public/text.wav', buf, 'binary', (err) => {
         if(err)console.log(err);
-        googlehome.play(serverUrl + '/text.mp3', () => {});
+        exec('/usr/bin/sox ' + __dirname + '/public/text.wav' + ' ' + __dirname + '/public/delay_text.wav' + ' delay 0.7', (err, stdout, stderr) => {
+          if(err)console.log(err);
+          googlehome.play(serverUrl + '/delay_text.wav', () => {});
+        });
       });
     });
     res.status(200);
